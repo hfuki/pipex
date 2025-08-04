@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 21:50:22 by hfuki             #+#    #+#             */
-/*   Updated: 2025/05/02 16:57:06 by marvin           ###   ########.fr       */
+/*   Updated: 2025/08/04 21:23:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	add_word(char **res, char const *s, size_t *i, char c)
 
 	while (s[*i] == c && s[*i])
 		(*i)++;
+	if (s[*i] == '"' || s[*i] == '\'')
+		(*i)++;
 	start = *i;
 	len = 0;
 	while (s[*i] && s[*i] != c)
@@ -69,6 +71,8 @@ static int	add_word(char **res, char const *s, size_t *i, char c)
 		len++;
 		(*i)++;
 	}
+	if (s[(*i) - 1] == '"' || s[(*i) - 1] == '\'')
+		len--;
 	*res = dup_word(s + start, len);
 	if (!(*res))
 		return (0);
