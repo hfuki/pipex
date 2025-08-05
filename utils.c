@@ -23,11 +23,32 @@ void	free_array(char **arr)
 	free(arr);
 }
 
-char	**split_awk(char *cmd)
+static char *substr_spe(char *cmd, int spe1, int len, int second_com)
 {
-	char	**res;
-	char	*arg;
+	int		spe2;
+	char	*arr_spe_first;
+	char	*arr_spe_bet;
+	char	*arr_spe_last;
+	char	*res_first;
+
+	spe2 = spe1 + 2;
+	while (cmd[spe2] && cmd[spe2] != '\\')
+		spe2++;
+	arr_spe_first = ft_substr(cmd, second_com, spe1 - second_com);
+	arr_spe_bet = ft_substr(cmd, spe1 + 1, spe2 - (spe1 + 1));
+	arr_spe_last = ft_substr(cmd, spe2 + 1, len - (spe2 + 1) - 1);
+	if (!arr_spe_first || !arr_spe_bet || !arr_spe_last)
+		return (NULL);
+	res_first = ft_strjoin(arr_spe_first, arr_spe_bet);
+	if (!res_first)
+		return (NULL);
+	return (ft_strjoin(res_first, arr_spe_last));
+}
+
+static char	*get_substr(char *cmd)
+{
 	int		i;
+	int		j;
 	int		len;
 
 	i = 3;
@@ -36,7 +57,22 @@ char	**split_awk(char *cmd)
 	if (cmd[i] == '"' || cmd[i] == '\'')
 		i++;
 	len = ft_strlen(cmd);
-	arg = ft_substr(cmd, i, len - i - 1);
+	j = 0;
+	while (cmd[j])
+	{
+		if (cmd[j] == '\\')
+			return (substr_spe(cmd, j, len, i));
+		j++;
+	}
+	return (ft_substr(cmd, i, len - i - 1));
+}
+
+char	**split_awk(char *cmd)
+{
+	char	**res;
+	char	*arg;
+
+	arg = get_substr(cmd);
 	if (!arg)
 		return (NULL);
 	res = malloc(sizeof(char *) * 3);
