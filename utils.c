@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hfuki <hfuki@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/20 14:45:22 by hfuki             #+#    #+#             */
+/*   Updated: 2025/08/20 14:45:22 by hfuki            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -23,7 +35,7 @@ void	free_array(char **arr)
 	free(arr);
 }
 
-static char *substr_spe(char *cmd, int spe1, int len, int second_com)
+static char	*substr_spe(char *cmd, int spe1, int len, int second_com)
 {
 	int		spe2;
 	char	*arr_spe_first;
